@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Symfart Products{% endblock %}
+
+{% block body %}
+  <h1>My name is {{ name }}</h1>
+  {% if products %}
+    {% for product in products %}
+      {{ product }}
+    {% endfor %}
+  {% else %}
+    <p> No products. </p>
+  {% endif %}
+
+{% endblock %}
