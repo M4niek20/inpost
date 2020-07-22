@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Create a product{% endblock %}
+
+{% block body %}
+  <h1>Create a product</h1>
+  {{ form_start(form) }}
+  {{ form_widget(form) }}
+  {{ form_end(form) }}
+  <hr/>
+  <a href="/">Go back</a>
+{% endblock %}

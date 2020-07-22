@@ -2,6 +2,18 @@ index:
    path: /
    controller: App\Controller\ProductController::index
 
-save:
-   path: /product/save
-   controller: App\Controller\ProductController::save
+productCreate:
+   path: /products/create
+   controller: App\Controller\ProductController::create
+
+productFind:
+   path: /products/find/
+   controller: App\Controller\ProductController::find
+
+productShow:
+   path: /products/show/{id}
+   controller: App\Controller\ProductController::show
+
+productDelete:
+   path: /products/delete/{id}
+   controller: App\Controller\ProductController::delete
