@@ -24,32 +24,46 @@
       $products = $this->getDoctrine()->getRepository(Product::class)->findAll();
 
       return $this->render(
-        'index.html.twig',
-         array("name" => "Brad", "products" => $products)
-      );
+        'products/index.html.twig',
+         array("products" => $products));
     }
 
-    // /*
-    // * @Route("/products/find", name="findProduct")
-    // * @Method({"GET"}) 
-    // */
-    // public function find(Request $request){
+    /*
+    * @Route("/products/find", name="findProduct")
+    * @Method({"GET","POST"}) 
+    */
+    public function find(Request $request){
 
-    //   $product = new Product();
+      $product = new Product();
 
-    //   $form = $this->createFormBuilder($product)
-    //           ->add("barcode", TextType::class, array(
-    //             "attr" => array("class" => "form-control")))
-    //           ->add("submit", SubmitType::class, array(
-    //             "label" => "Search",
-    //             "attr" => array("class" => "btn btn-primary mt-3")))
-    //           ->getForm();
+      $form = $this->createFormBuilder()
+        ->add("barcode", TextType::class, array(
+          "attr" => array("class" => "form-control")))
+        ->add("submit", SubmitType::class, array(
+          "label" => "Search",
+          "attr" => array("class" => "btn btn-primary mt-3")))
+        ->getForm();
 
-    //   return $this->render("products/find.html.twig", array(
-    //     "form" => $form->createView()
-    //     ));
+      $form->handleRequest($request);
+      if($form->isSubmitted() && $form->isValid()) {
 
-    // }  
+        $formInfo = $form->getData();
+
+        $rep = $this->getDoctrine()->getRepository(Product::class);
+        $product = $rep->findOneBy( ['barcode' => $formInfo] );
+
+        return $this->render("products/find.html.twig", array(
+          "form" => $form->createView(),
+          "product" => $product
+        ));
+      }
+
+
+      return $this->render("products/find.html.twig", array(
+        "form" => $form->createView()
+      ));
+
+    }  
 
     /*
     * @Route("/products/show/{id}", name="showProduct")
@@ -58,12 +72,6 @@
       
       $product = $this->getDoctrine()->getRepository(Product::class)->find($id);
 
-      // $asd = $product->getProducts();
-      // foreach($asd as $owners){
-      //   var_dump($owners->getOwner()->getName());
-      // }
-      // return new Response();
-      
       return $this->render("products/show.html.twig", array("product" => $product));
 
     }  
@@ -77,26 +85,25 @@
       $product = new Product();
 
       $form = $this->createFormBuilder($product)
-              ->add("name", TextType::class, array(
-                "attr" => array("class" => "form-control")))
-              ->add("barcode", TextType::class, array(
-                "attr" => array("class" => "form-control")))
-              ->add("submit", SubmitType::class, array(
-                "label" => "Create",
-                "attr" => array("class" => "btn btn-primary mt-3")))
-              ->getForm();
+        ->add("name", TextType::class, array(
+          "attr" => array("class" => "form-control")))
+        ->add("barcode", TextType::class, array(
+          "attr" => array("class" => "form-control")))
+        ->add("submit", SubmitType::class, array(
+          "label" => "Create",
+          "attr" => array("class" => "btn btn-primary mt-3")))
+        ->getForm();
 
       $form->handleRequest($request);
       if($form->isSubmitted() && $form->isValid()) {
-        $article = $form->getData();
+        $product = $form->getData();
 
         $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->persist($article);
+        $entityManager->persist($product);
         $entityManager->flush();
         
         return $this->redirectToRoute('index');
       }
-
 
       return $this->render("products/create.html.twig", array(
         "form" => $form->createView()

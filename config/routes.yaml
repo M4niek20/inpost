@@ -1,5 +1,9 @@
 index:
    path: /
+   controller: App\Controller\IndexController::index
+
+productList:
+   path: /products/
    controller: App\Controller\ProductController::index
 
 productCreate:
@@ -17,3 +21,11 @@ productShow:
 productDelete:
    path: /products/delete/{id}
    controller: App\Controller\ProductController::delete
+
+ownerList:
+   path: /owners/
+   controller: App\Controller\OwnerController::index
+
+ownerCreate:
+   path: /owners/create
+   controller: App\Controller\OwnerController::create

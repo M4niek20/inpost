@@ -8,10 +8,15 @@
   <p>Name: {{ product.name }}</p>
   <p>Barcode: {{ product.barcode }}</p>
   <h2>Owners</h2>
-  {% for productOwner in product.getProducts %}
-    {{productOwner.getOwner.getName }}
-  {% endfor %}
-
+  {% if product.getProducts %}
+  <ul>
+    {% for productOwner in product.getProducts %}
+      <li>{{ productOwner.getOwner.getName }}</li>
+    {% endfor %}
+    </ul>
+  {% else %}
+    <p>No owners.</p>
+  {% endif %}
   <hr/>
   <a href="/">Go back</a>
 {% endblock %}

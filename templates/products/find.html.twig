@@ -6,8 +6,28 @@
   <h1>Search for a product</h1>
   <p>by a barcode</p>
   {{ form_start(form) }}
-  {{ form_widget() }}
+  {{ form_widget(form) }}
   {{ form_end(form) }}
   <hr/>
+  {% if product is defined and product  %}
+
+    <h1>Found a product!</h1>
+    <p>id: {{ product.id }}</p>
+    <p>Name: {{ product.name }}</p>
+    <p>Barcode: {{ product.barcode }}</p>
+    <h2>Owners</h2>
+    {% if product.getProducts %}
+    <ul>
+      {% for productOwner in product.getProducts %}
+        <li>{{ productOwner.getOwner.getName }}</li>
+      {% endfor %}
+      </ul>
+    {% else %}
+      <p>No owners.</p>
+    {% endif %}
+
+  {% else %}
+  <p>No products.</p>
+  {% endif %}
   <a href="/">Go back</a>
 {% endblock %}

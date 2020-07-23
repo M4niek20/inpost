@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Create a owner{% endblock %}
+
+{% block body %}
+  <h1>Create a owner</h1>
+  {{ form_start(form) }}
+  {{ form_widget(form) }}
+  {{ form_end(form) }}
+  <hr/>
+  <a href="/owners">Go back</a>
+{% endblock %}
