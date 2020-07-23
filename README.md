@@ -10,7 +10,7 @@
 I used Symfony 5.1.2, php 7.3.13 and doctrine v2.7.1.
 Entities are in 'src/Entity' folder. Barcode has unique feature and the expiration_date can be null.
 There is many-to-many relationship between Owner and Product, realized by product_owners table. 
-product can have multiple items i 'stock' table.
+product can have multiple items using the 'stock' table.
 I tried to make methods in entities for finding product by barcode and searching expired products for owner, but I had a problem with that. I have to learn this. I realized these functions in the owners and products controller.
 
 ## About project
