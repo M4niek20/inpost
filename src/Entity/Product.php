@@ -36,7 +36,7 @@ class Product
     private $barcode;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Stock", mappedBy="product")
+     * @ORM\OneToMany(targetEntity="App\Entity\Stock", mappedBy="product", orphanRemoval=true)
      */
     private $stock;
 

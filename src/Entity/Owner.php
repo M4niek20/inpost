@@ -30,19 +30,19 @@ class Owner
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\ProductOwners", mappedBy="owner")
      */
-    private $owners;
+    private $products;
 
     public function __construct()
     {
-        $this->owners = new ArrayCollection();
+        $this->products = new ArrayCollection();
     }
 
     /**
      * @return Collection|Owner[]
      */
-    public function getOwners(): Collection
+    public function getProducts(): Collection
     {
-        return $this->owners;
+        return $this->products;
     }
 
 

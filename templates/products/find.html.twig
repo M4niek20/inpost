@@ -11,20 +11,47 @@
   <hr/>
   {% if product is defined %}
     {% if product %}
+    
       <h1>Found a product!</h1>
       <p>id: {{ product.id }}</p>
       <p>Name: {{ product.name }}</p>
       <p>Barcode: {{ product.barcode }}</p>
+
       <h2>Owners</h2>
       {% if product.getProductOwners %}
       <ul>
-        {% for productOwner in product.getProductOwners %}
-          <li>{{ productOwner.getOwner.getName }}</li>
+        {% for product in product.getProductOwners %}
+          <li>{{ product.getOwner.getName }}</li>
         {% endfor %}
         </ul>
       {% else %}
         <p>No owners.</p>
       {% endif %}
+
+      <h2>Stock</h2>
+      {% if product.getStock %}
+        <table class="table table-bordered table-striped">
+          <thead>
+            <th>id</td>
+            <th>expiration date</td>
+          </thead>
+          <tbody>
+          {% for stock in product.getStock %}
+            <tr>
+              <td> {{stock.getId}} </td>
+              <td> 
+                {% if stock.getExpirationDate %}
+                  {{ stock.getExpirationDate|date("d/m/Y") }} 
+                {% else %}
+                -
+                {% endif %}
+              </td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      {% endif %}
+
     {% else %}
     <h1>No products.</h1>
     {% endif %}
