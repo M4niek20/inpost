@@ -9,6 +9,7 @@
             <thead>
                 <th>id</th>
                 <th>Name</th>
+                <th style="width:1px"></th>
             </thead>
             <tbody>
                 {% for owner in owners %}
@@ -19,10 +20,17 @@
                     <td>
                         {{ owner.name }}
                     </td>
+                    <td style="width:1px">
+                        <a href="/owners/show/{{ owner.id }}">
+                            <button type="button" class="btn btn-dark">
+                            details
+                            </button>
+                        </a>
+                    </td>
                 </tr>
                 {% endfor %}
                 <tr>
-                    <td colspan="2" class="text-center">
+                    <td colspan="3" class="text-center">
                         <a href="create">Add new owner.</a>
                     </td>
                 </tr>

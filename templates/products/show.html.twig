@@ -3,14 +3,17 @@
 {% block title %}{{ product.name }}{% endblock %}
 
 {% block body %}
+
   <h1>Product info</h1>
   <p>id: {{ product.id }}</p>
   <p>Name: {{ product.name }}</p>
   <p>Barcode: {{ product.barcode }}</p>
+  <hr/>
+
   <h2>Owners</h2>
-  {% if product.getProducts %}
+  {% if product.getProductOwners %}
   <ul>
-    {% for productOwner in product.getProducts %}
+    {% for productOwner in product.getProductOwners %}
       <li>{{ productOwner.getOwner.getName }}</li>
     {% endfor %}
     </ul>
@@ -18,5 +21,30 @@
     <p>No owners.</p>
   {% endif %}
   <hr/>
-  <a href="/">Go back</a>
+
+  <h2>Stock</h2>
+  {% if product.getStock %}
+    <table class="table table-bordered table-striped">
+      <thead>
+        <th>id</td>
+        <th>expiration date</td>
+      </thead>
+      <tbody>
+      {% for stock in product.getStock %}
+        <tr>
+          <td> {{stock.getId}} </td>
+          <td> 
+            {% if stock.getExpirationDate %}
+              {{ stock.getExpirationDate|date("d/m/Y") }} 
+            {% else %}
+            -
+            {% endif %}
+          </td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  {% endif %}
+  <hr/>
+  <a href="/products/">Go back</a>
 {% endblock %}

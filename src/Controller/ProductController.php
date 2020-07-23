@@ -3,15 +3,12 @@
 
   use App\Entity\Product;
   use Symfony\Component\HttpFoundation\Response;
+  use Symfony\Component\HttpFoundation\Request;
   use Symfony\Component\Routing\Annotation\Route;
   use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
   use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-
-  // forms
   use Symfony\Component\Form\Extension\Core\Type\TextType;
   use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-  use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-  use Symfony\Component\HttpFoundation\Request;
 
   class ProductController extends AbstractController {
 
@@ -21,7 +18,9 @@
     */ 
     public function index() {
 
-      $products = $this->getDoctrine()->getRepository(Product::class)->findAll();
+      $products = $this->getDoctrine()
+        ->getRepository(Product::class)
+        ->findAll();
 
       return $this->render(
         'products/index.html.twig',
@@ -47,10 +46,11 @@
       $form->handleRequest($request);
       if($form->isSubmitted() && $form->isValid()) {
 
-        $formInfo = $form->getData();
+        $formResponse = $form->getData();
 
-        $rep = $this->getDoctrine()->getRepository(Product::class);
-        $product = $rep->findOneBy( ['barcode' => $formInfo] );
+        $productRep = $this->getDoctrine()->getRepository(Product::class);
+        // $product = $rep->findOneBy( ['barcode' => $formInfo] );
+        $product = Product::findByBarcode($productRep, $formResponse);
 
         return $this->render("products/find.html.twig", array(
           "form" => $form->createView(),
@@ -102,7 +102,7 @@
         $entityManager->persist($product);
         $entityManager->flush();
         
-        return $this->redirectToRoute('index');
+        return $this->redirectToRoute('productList');
       }
 
       return $this->render("products/create.html.twig", array(

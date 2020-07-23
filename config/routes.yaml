@@ -26,6 +26,14 @@ ownerList:
    path: /owners/
    controller: App\Controller\OwnerController::index
 
+ownerShow:
+   path: /owners/show/{id}
+   controller: App\Controller\OwnerController::show
+
 ownerCreate:
    path: /owners/create
    controller: App\Controller\OwnerController::create
+
+ownerExpired:
+   path: /owners/expired
+   controller: App\Controller\OwnerController::findExpiredProducts

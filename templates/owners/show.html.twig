@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Owner info{% endblock %}
+
+{% block body %}
+  <h1>Owner: {{ owner.getName }} </h1>
+  <h2> Products </h2>
+  {% if owner.getProducts is defined and owner.getProducts is not null %}
+    <ol>
+      {% for product in owner.getProducts %}
+        <li>
+          {{product.getProduct.getName }}
+          {% if product.getProduct.getStock is not empty %}
+          <table class="table table-bordered table-striped">
+            <thead>
+              <th>id</th>
+              <th>expiration date</th>
+            </thead>
+            <tbody>
+              {% for stock in product.getProduct.getStock %}
+                <tr>
+                  <td>{{ stock.id }}</td>
+                  <td>
+                    {% if stock.expirationDate is not null %}
+                      {{ stock.expirationDate|date('d/m/Y') }}
+                    {% else %}
+                    -
+                    {% endif %}
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          {% endif %}
+      {% endfor %}
+    </ol>
+  {% else %}
+  <p>No products.</p>
+  {% endif %}
+  <hr/>
+  <a href="/owners">Go back</a>
+{% endblock %}

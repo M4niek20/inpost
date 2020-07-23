@@ -10,12 +10,10 @@ use Doctrine\Common\Collections\Collection;
 
 /**
  * @ORM\Entity(repositoryClass=ProductRepository::class)
- * @ORM\Table(
- *      name="Product"
- * )
+ * @ORM\Table(name="Product")
  * @UniqueEntity(
  *     fields={"barcode"},
- *     message="This port is already in use on that host."
+ *     message="there is already such a product."
  * )
  */
 class Product
@@ -37,27 +35,39 @@ class Product
      */
     private $barcode;
 
-
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Stock", mappedBy="product")
+     */
+    private $stock;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\ProductOwners", mappedBy="product")
+     * @ORM\OneToMany(targetEntity="App\Entity\ProductOwners", mappedBy="product", orphanRemoval=true)
      */
-    private $products;
+
+    private $productOwners;
 
     public function __construct()
     {
-        $this->products = new ArrayCollection();
+        $this->productOwners = new ArrayCollection();
+        $this->stock = new ArrayCollection();
+
     }
 
     /**
      * @return Collection|Product[]
      */
-    public function getProducts(): Collection
+    public function getProductOwners(): Collection
     {
-        return $this->products;
+        return $this->productOwners;
     }
-
-
+ 
+    /**
+     * @return Collection|Product[]
+     */
+    public function getStock(): Collection
+    {
+        return $this->stock;
+    }
 
     public function getId(): ?int
     {
@@ -86,5 +96,11 @@ class Product
         $this->barcode = $barcode;
 
         return $this;
+    }
+
+    public static function findByBarcode($em, $barcode )
+    {
+        return $em->findOneBy(['barcode' => $barcode]);
+        
     }
 }

@@ -2,12 +2,15 @@
 
 namespace App\Entity;
 
-use App\Repository\ProductOwnersRepository;
+use App\Repository\StockRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+
 /**
- * @ORM\Entity(repositoryClass=ProductOwnersRepository::class)
+ * @ORM\Entity(repositoryClass=StockRepository::class)
  */
-class ProductOwners
+class Stock
 {
     /**
      * @ORM\Id()
@@ -17,9 +20,9 @@ class ProductOwners
     private $id;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="date", nullable=true)
      */
-    private $owner_id;
+    private $expiration_date;
 
     /**
      * @ORM\Column(type="integer")
@@ -28,9 +31,8 @@ class ProductOwners
 
 
 
-
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Product", inversedBy="productOwners")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Product", inversedBy="stock")
      */
     private $product;
 
@@ -48,38 +50,20 @@ class ProductOwners
 
 
 
-     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Owner", inversedBy="productOwners")
-     */
-    private $owner;
-
-    public function getOwner(): ?Owner
-    {
-        return $this->owner;
-    }
-
-    public function setOwner(?Owner $owner): self
-    {
-        $this->owner = $owner;
-
-        return $this;
-    }
-
-
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getOwnerId(): ?int
+    public function getExpirationDate(): ?\DateTimeInterface
     {
-        return $this->owner_id;
+        return $this->expiration_date;
     }
 
-    public function setOwnerId(int $owner_id): self
+    public function setExpirationDate(?\DateTimeInterface $expiration_date): self
     {
-        $this->owner_id = $owner_id;
+        $this->expiration_date = $expiration_date;
 
         return $this;
     }
