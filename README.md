@@ -7,7 +7,7 @@
 4. ready
 
 ## Tasks realization
-I used Symfony 5.1.2, php 7.3.13 and doctrine v2.7.1.
+I used Symfony 5.1.2, php 7.4.8 and doctrine v2.7.1.
 Entities are in 'src/Entity' folder. Barcode has unique feature and the expiration_date can be null.
 There is many-to-many relationship between Owner and Product, realized by product_owners table. 
 product can have multiple items using the 'stock' table.
