@@ -6,10 +6,12 @@
 2. Upload files to c://xampp/htdocs/
 3. In console go to project directory and type 'composer install'
 4. Go to C:\xampp\apache\conf\extra\httpd-vhosts.conf, edit in notepad and paste
+
   <VirtualHost *:80>
     DocumentRoot "C:/xampp/htdocs/inpost/public"
     ServerName inpost.test
   </VirtualHost>
+  
 5. Go to C:\Windows\System32\drivers\etc, edit file 'hosts' and add line 
   127.0.0.1       inpost.test
 6. Run xampp, Apache and MySql
